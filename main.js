@@ -15,9 +15,10 @@ module.exports = class EditorScrollReturn extends Plugin {
 
     this.boundRefresh = () => this.refresh();
     this.boundToggle = () => this.scrollToggle();
+    this.boundScrollToEnd = () => this.scrollToEnd();
     this.boundScrollerScroll = () => this.updateVisibility();
 
-    this.buttonEl.addEventListener("click", this.boundToggle);
+    this.buttonEl.addEventListener("click", this.boundScrollToEnd);
     this.zoneEl.addEventListener("click", this.boundToggle);
 
     this.registerEvent(this.app.workspace.on("active-leaf-change", this.boundRefresh));
@@ -44,7 +45,7 @@ module.exports = class EditorScrollReturn extends Plugin {
       cls: "editor-scroll-return-button",
       attr: {
         type: "button",
-        "aria-label": "Return to saved scroll position"
+        "aria-label": "Scroll to end"
       }
     });
 
@@ -144,6 +145,18 @@ module.exports = class EditorScrollReturn extends Plugin {
     scroller.scrollTo({ top, behavior: "smooth" });
   }
 
+  scrollToEnd() {
+    const scroller = this.getActiveSourceScroller();
+    if (!scroller) return;
+    if (scroller !== this.currentScroller) this.attachScroller(scroller);
+
+    const state = this.getState(scroller);
+    state.savedTop = null;
+    this.setReturnMode(false);
+    this.scrollTo(scroller, Math.max(0, scroller.scrollHeight - scroller.clientHeight));
+    this.updateVisibility();
+  }
+
   setReturnMode(on) {
     this.zoneEl.toggleClass(RETURN_MODE_CLASS, on);
     this.buttonEl.toggleClass(RETURN_MODE_CLASS, on);
@@ -153,10 +166,10 @@ module.exports = class EditorScrollReturn extends Plugin {
     const scroller = this.currentScroller;
     const state = scroller ? this.getState(scroller) : null;
     const isAtTop = scroller ? scroller.scrollTop <= scroller.clientHeight * 0.1 : false;
-    const showReturnButton = Boolean(scroller && state?.savedTop !== null && isAtTop);
+    const showEndButton = Boolean(scroller && isAtTop);
 
     this.zoneEl.toggleClass(VISIBLE_CLASS, Boolean(scroller && !this.isMobile()));
-    this.buttonEl.toggleClass(VISIBLE_CLASS, showReturnButton);
+    this.buttonEl.toggleClass(VISIBLE_CLASS, showEndButton);
     this.setReturnMode(Boolean(state && state.savedTop !== null));
   }
 
