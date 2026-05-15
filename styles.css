@@ -2,7 +2,8 @@
   position: fixed;
   right: 24px;
   bottom: 24px;
-  z-index: 9999;
+  z-index: 10000;
+  isolation: isolate;
   display: flex;
   width: 48px;
   height: 48px;
@@ -11,6 +12,7 @@
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   background: #211e1e;
+  background-clip: padding-box;
   color: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   cursor: pointer;
@@ -37,6 +39,7 @@
   width: 28px;
   height: 28px;
   stroke-width: 3;
+  transform: translateY(-1px);
 }
 
 .editor-scroll-return-zone {
@@ -55,6 +58,7 @@
 .editor-scroll-return-zone.visible.is-enabled {
   display: block;
   width: 5vw;
+  clip-path: inset(0 0 88px 0);
 }
 
 .editor-scroll-return-zone:hover {
@@ -90,6 +94,7 @@
     width: 42px !important;
     height: 42px !important;
     stroke-width: 3.5 !important;
+    transform: translateY(-1px);
   }
 
   .editor-scroll-return-button:focus {
