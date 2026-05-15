@@ -17,6 +17,7 @@ module.exports = class EditorScrollReturn extends Plugin {
     this.boundToggle = () => this.scrollToggle();
     this.boundScrollerScroll = () => this.updateVisibility();
 
+    this.buttonEl.addEventListener("click", this.boundToggle);
     this.zoneEl.addEventListener("click", this.boundToggle);
 
     this.registerEvent(this.app.workspace.on("active-leaf-change", this.boundRefresh));
@@ -34,10 +35,34 @@ module.exports = class EditorScrollReturn extends Plugin {
 
   onunload() {
     this.detachScroller();
+    this.buttonEl?.remove();
     this.zoneEl?.remove();
   }
 
   createControls() {
+    this.buttonEl = document.body.createEl("button", {
+      cls: "editor-scroll-return-button",
+      attr: {
+        type: "button",
+        "aria-label": "Return to saved scroll position"
+      }
+    });
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "22");
+    svg.setAttribute("height", "22");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "2.5");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+
+    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    arrow.setAttribute("points", "6 9 12 15 18 9");
+    svg.appendChild(arrow);
+    this.buttonEl.appendChild(svg);
+
     this.zoneEl = document.body.createDiv({
       cls: "editor-scroll-return-zone",
       attr: { "aria-hidden": "true" }
@@ -53,6 +78,7 @@ module.exports = class EditorScrollReturn extends Plugin {
 
     const enabled = Boolean(scroller);
     this.zoneEl.toggleClass("is-enabled", enabled && !this.isMobile());
+    this.buttonEl.toggleClass("is-enabled", enabled);
     this.updateVisibility();
   }
 
@@ -120,13 +146,17 @@ module.exports = class EditorScrollReturn extends Plugin {
 
   setReturnMode(on) {
     this.zoneEl.toggleClass(RETURN_MODE_CLASS, on);
+    this.buttonEl.toggleClass(RETURN_MODE_CLASS, on);
   }
 
   updateVisibility() {
     const scroller = this.currentScroller;
     const state = scroller ? this.getState(scroller) : null;
+    const isAtTop = scroller ? scroller.scrollTop <= scroller.clientHeight * 0.1 : false;
+    const showReturnButton = Boolean(scroller && state?.savedTop !== null && isAtTop);
 
     this.zoneEl.toggleClass(VISIBLE_CLASS, Boolean(scroller && !this.isMobile()));
+    this.buttonEl.toggleClass(VISIBLE_CLASS, showReturnButton);
     this.setReturnMode(Boolean(state && state.savedTop !== null));
   }
 

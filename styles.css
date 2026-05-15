@@ -1,3 +1,44 @@
+.editor-scroll-return-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  background: #211e1e;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  outline: none;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+}
+
+.editor-scroll-return-button:hover {
+  background: #4fc3f7;
+  border-color: transparent;
+}
+
+.editor-scroll-return-button.visible.is-enabled {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.editor-scroll-return-button svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  stroke-width: 3;
+}
+
 .editor-scroll-return-zone {
   position: fixed;
   top: var(--header-height, 40px);
@@ -35,5 +76,29 @@
     display: none !important;
     width: 0 !important;
     pointer-events: none !important;
+  }
+
+  .editor-scroll-return-button {
+    right: 16px !important;
+    bottom: 16px !important;
+    width: 64px !important;
+    height: 64px !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .editor-scroll-return-button svg {
+    width: 42px !important;
+    height: 42px !important;
+    stroke-width: 3.5 !important;
+  }
+
+  .editor-scroll-return-button:focus {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    background: #211e1e !important;
+  }
+
+  .editor-scroll-return-button:active {
+    border-color: transparent !important;
+    background: #4fc3f7 !important;
   }
 }
