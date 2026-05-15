@@ -1,0 +1,39 @@
+.editor-scroll-return-zone {
+  position: fixed;
+  top: var(--header-height, 40px);
+  right: 0;
+  z-index: 50;
+  display: none;
+  width: 0;
+  height: calc(100vh - var(--header-height, 40px));
+  cursor: pointer;
+  opacity: 0;
+  transition: background 0.2s ease;
+}
+
+.editor-scroll-return-zone.visible.is-enabled {
+  display: block;
+  width: 5vw;
+}
+
+.editor-scroll-return-zone:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.editor-scroll-return-zone.scroll-return-mode {
+  background: transparent;
+}
+
+.editor-scroll-return-zone.scroll-return-mode:hover {
+  opacity: 1;
+  background: rgba(37, 99, 235, 0.08);
+}
+
+@media (max-width: 700px), (max-device-width: 700px) {
+  .editor-scroll-return-zone {
+    display: none !important;
+    width: 0 !important;
+    pointer-events: none !important;
+  }
+}

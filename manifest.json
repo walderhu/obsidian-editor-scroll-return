@@ -1,0 +1,9 @@
+{
+  "id": "editor-scroll-return",
+  "name": "Editor Scroll Return",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Adds an editor-only right-edge scroll toggle that jumps to top and back to the saved position.",
+  "author": "Local",
+  "isDesktopOnly": false
+}
