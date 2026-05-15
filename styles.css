@@ -39,7 +39,7 @@
   width: 28px;
   height: 28px;
   stroke-width: 3;
-  transform: translateY(-1px);
+  transform: translateY(2px);
 }
 
 .editor-scroll-return-zone {
@@ -94,7 +94,7 @@
     width: 42px !important;
     height: 42px !important;
     stroke-width: 3.5 !important;
-    transform: translateY(-1px);
+    transform: translateY(2px);
   }
 
   .editor-scroll-return-button:focus {

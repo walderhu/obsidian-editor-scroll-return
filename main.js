@@ -60,7 +60,7 @@ module.exports = class EditorScrollReturn extends Plugin {
     svg.setAttribute("stroke-linejoin", "round");
 
     const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-    arrow.setAttribute("points", "6 8 12 14 18 8");
+    arrow.setAttribute("points", "6 10 12 16 18 10");
     svg.appendChild(arrow);
     this.buttonEl.appendChild(svg);
 
