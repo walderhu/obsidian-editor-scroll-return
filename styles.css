@@ -58,7 +58,6 @@
 .editor-scroll-return-zone.visible.is-enabled {
   display: block;
   width: 5vw;
-  clip-path: inset(0 0 88px 0);
 }
 
 .editor-scroll-return-zone:hover {
